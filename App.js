@@ -25,6 +25,7 @@ import Projects from './screens/Projects'
 import MapScreen from './screens/Map'
 import Calendar from './screens/Calendar'
 import Profile from './screens/Profile'
+import SingleProject from './screens/SingleProject'
 
 import colors from './constants/colors'
 
@@ -60,11 +61,14 @@ export const switchNavigator = createSwitchNavigator({
               headerTitle: 'Profile',
             },
           },
+          Project: {
+            screen: SingleProject,
+          },
         },
         {
           initialRouteName: 'Map',
           defaultNavigationOptions: {
-            headerBackTitle: () => null,
+            headerBackTitle: null,
             headerTitleStyle: {
               flex: 1,
               textAlign: 'center',
@@ -93,6 +97,12 @@ export const switchNavigator = createSwitchNavigator({
             screen: Profile,
             defaultNavigationOptions: {
               headerTitle: 'Profile',
+            },
+          },
+          Project: {
+            screen: SingleProject,
+            defaultNavigationOptions: {
+              headerTitle: 'Project',
             },
           },
         },
@@ -130,6 +140,12 @@ export const switchNavigator = createSwitchNavigator({
             screen: Profile,
             defaultNavigationOptions: {
               headerTitle: 'Profile',
+            },
+          },
+          Project: {
+            screen: SingleProject,
+            defaultNavigationOptions: {
+              headerTitle: 'Project',
             },
           },
         },

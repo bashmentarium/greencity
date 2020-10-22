@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useCallback} from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {useDispatch, useSelector} from 'react-redux'
+import {View} from 'react-native'
 import MapView, {Marker} from 'react-native-maps'
 import ProfileButton from '../../components/ProfileButton'
-
-const pin = require('../../assets/images/icons/pin.png')
+import Modal from '../../components/Modal'
+import {fetchProjectsStart, projectsSelector} from '../../ducks/projects'
 import color from '../../utils/rgb'
 import styles from '../../constants/styles'
 
@@ -13,9 +14,12 @@ const initialLocation = {
 }
 
 const MapScreen = ({navigation}) => {
-  const [projects, setProjects] = useState(null)
+  const [project, setProject] = useState({})
   const [showModal, setShowModal] = useState(false)
+  const {loading, success, error} = useSelector(projectsSelector)
+  const token = useSelector((state) => state.login.success.token)
   const [selectedLocation, setSelectedLocation] = useState(initialLocation)
+  const dispatch = useDispatch()
 
   const mapRegion = {
     latitude: 37.78,
@@ -24,37 +28,44 @@ const MapScreen = ({navigation}) => {
     longitudeDelta: 0.0421,
   }
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    dispatch(fetchProjectsStart(token))
+  }, [])
 
-  const selectLocationHandler = (event) => {
-    setSelectedLocation({
-      lat: event.nativeEvent.coordinate.latitude,
-      lng: event.nativeEvent.coordinate.longitude,
-    })
-  }
+  useEffect(() => {}, [showModal])
 
-  const markerCoordinates = {
-    latitude: selectedLocation.lat,
-    longitude: selectedLocation.lng,
+  const handleClick = (project) => {
+    setProject(project)
+    setShowModal(true)
   }
 
   return (
     <MapView region={mapRegion} style={styles.mapScreen}>
-      <Marker
-        coordinate={{latitude: 37.78, longitude: -122.43}}
-        pinColor={color()}
-        onClick={() => handleClick()}
-      />
-      <Marker
-        coordinate={{latitude: 37.77, longitude: -122.4}}
-        pinColor={color()}
-        onClick={() => handleClick()}
-      />
-      <Marker
-        coordinate={{latitude: 37.79, longitude: -122.4}}
-        pinColor={color()}
-        onClick={() => handleClick()}
-      />
+      {success &&
+        success.map((element, index, array) => {
+          const {id, name, latitude, longitude} = element
+          const pinColor = color()
+          return (
+            <View key={id}>
+              <Marker
+                title={name}
+                coordinate={{latitude: latitude, longitude: longitude}}
+                pinColor={pinColor}
+                onPress={() => handleClick(element)}
+              />
+            </View>
+          )
+        })}
+      <View>
+        {showModal && (
+          <Modal
+            project={project}
+            isVisible={showModal}
+            setShowModal={setShowModal}
+            navigation={navigation}
+          />
+        )}
+      </View>
     </MapView>
   )
 }
