@@ -43,7 +43,7 @@ export default function reducer(
   }
 }
 
-export const projectsSelector = (state) => state.projects
+export const projectsSelector = (state) => state.projects || []
 
 export const fetchProjectsStart = createAction(START)
 export const fetchProjectsSuccess = createAction(SUCCESS)
@@ -60,7 +60,7 @@ export function* fetchProjectsSaga({type, payload}) {
 
     yield put(fetchProjectsSuccess(response))
   } catch (e) {
-    return yield put(fetchProjectsError({error: error.message}))
+    return yield put(fetchProjectsError({error: e.message}))
   }
 }
 

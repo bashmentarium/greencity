@@ -8,6 +8,7 @@ import Label from '../../components/Label'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import styles from '../../constants/styles'
+import colors from '../../constants/colors'
 
 const Login = ({navigation}) => {
   const [authError, setAuthError] = useState('')
@@ -20,7 +21,9 @@ const Login = ({navigation}) => {
   }
 
   return (
-    <View style={styles.screenContainer}>
+    <View
+      style={{...styles.screenContainer, backgroundColor: colors.background}}
+    >
       <KeyboardAvoidingView
         style={{
           width: '100%',
@@ -40,8 +43,8 @@ const Login = ({navigation}) => {
           </Text>
           <Formik
             initialValues={{
-              email: 'author@gmail.com',
-              password: '126357849',
+              email: '',
+              password: '',
             }}
             onSubmit={loginHandler}
           >
@@ -65,7 +68,7 @@ const Login = ({navigation}) => {
                   onChangeText={handleChange('password')}
                   error={errors.password}
                   clearTextOnFocus={false}
-                  secureTextEntry={false}
+                  secureTextEntry={true}
                   maxLength={30}
                   onBlur={() => setFieldTouched('password')}
                   returnKeyType='done'

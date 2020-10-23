@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, Image} from 'react-native'
+import {ScrollView, View, Text, Image} from 'react-native'
 import ProfileButton from '../../components/ProfileButton'
 
 import styles from '../../constants/styles'
@@ -11,7 +11,7 @@ const SingleProject = ({navigation}) => {
   const {name, status, address, start_date, description} = project
 
   return (
-    <View style={styles.singleProjectWrapper}>
+    <ScrollView style={styles.singleProjectWrapper}>
       <Image source={map_preview} />
       <Text style={styles.generalInfo}>General info</Text>
       <View style={styles.projectNameWrapper}>
@@ -42,7 +42,7 @@ const SingleProject = ({navigation}) => {
         <Text style={styles.projectNameLabel}>Description:</Text>
         <Text>{description}</Text>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 

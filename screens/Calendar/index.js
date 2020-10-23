@@ -6,7 +6,7 @@ import styles from '../../constants/styles'
 
 const Calendar = ({navigation}) => {
   return (
-    <View>
+    <View style={styles.screenContainer}>
       <Text>Calendar</Text>
     </View>
   )

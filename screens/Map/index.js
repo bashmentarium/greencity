@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {View} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import MapView, {Marker} from 'react-native-maps'
 import ProfileButton from '../../components/ProfileButton'
 import Modal from '../../components/Modal'
@@ -40,22 +40,24 @@ const MapScreen = ({navigation}) => {
   }
 
   return (
-    <MapView region={mapRegion} style={styles.mapScreen}>
-      {success &&
-        success.map((element, index, array) => {
-          const {id, name, latitude, longitude} = element
-          const pinColor = color()
-          return (
-            <View key={id}>
-              <Marker
-                title={name}
-                coordinate={{latitude: latitude, longitude: longitude}}
-                pinColor={pinColor}
-                onPress={() => handleClick(element)}
-              />
-            </View>
-          )
-        })}
+    <View style={StyleSheet.absoluteFillObject}>
+      <MapView region={mapRegion} style={StyleSheet.absoluteFillObject}>
+        {success &&
+          success.map((element, index, array) => {
+            const {id, name, latitude, longitude} = element
+            const pinColor = color()
+            return (
+              <View key={id}>
+                <Marker
+                  title={name}
+                  coordinate={{latitude: latitude, longitude: longitude}}
+                  pinColor={pinColor}
+                  onPress={() => handleClick(element)}
+                />
+              </View>
+            )
+          })}
+      </MapView>
       <View>
         {showModal && (
           <Modal
@@ -66,7 +68,7 @@ const MapScreen = ({navigation}) => {
           />
         )}
       </View>
-    </MapView>
+    </View>
   )
 }
 

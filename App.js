@@ -3,6 +3,7 @@ import {AppLoading} from 'expo'
 import * as Font from 'expo-font'
 import i18n from 'i18n-js'
 import {Provider} from 'react-redux'
+import {Platform} from 'react-native'
 import {createAppContainer, createSwitchNavigator} from 'react-navigation'
 import {createStackNavigator} from 'react-navigation-stack'
 import {createBottomTabNavigator} from 'react-navigation-tabs'
@@ -178,11 +179,13 @@ export const switchNavigator = createSwitchNavigator({
         style: {
           backgroundColor: colors.background,
           height: 70,
+          paddingTop: 10,
           borderTopColor: 'transparent',
         },
         labelStyle: {
           fontFamily: 'light',
           fontSize: 13,
+          marginBottom: Platform === 'ios' ? 0 : 10,
         },
         activeTintColor: colors.black,
         inactiveTintColor: colors.borderColor,

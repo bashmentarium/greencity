@@ -1,5 +1,5 @@
 export const fetchProjects = (token) =>
-  fetch(`http://localhost:1337/projects`, {
+  fetch(`https://green-city-us.herokuapp.com/projects`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,

@@ -1,5 +1,5 @@
 export const login = (authData) =>
-  fetch('http://localhost:1337/auth/local', {
+  fetch('https://green-city-us.herokuapp.com/auth/local', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

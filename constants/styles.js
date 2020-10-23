@@ -66,7 +66,17 @@ export default StyleSheet.create({
     fontSize: 16,
     textTransform: 'capitalize',
   },
-  button: {},
+  button: {
+    width: '50%',
+    height: 40,
+    backgroundColor: 'white',
+    borderRadius: 3,
+
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
   buttonIos: {
     width: '50%',
     height: 40,
@@ -79,7 +89,6 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.18,
     shadowRadius: 1.0,
-    elevation: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
@@ -187,5 +196,22 @@ export default StyleSheet.create({
   },
   detailWrapper: {
     marginTop: 20,
+  },
+  projectSingleWrapper: {
+    padding: 10,
+    backgroundColor: colors.white,
+    marginTop: 20,
+    width: '95%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  projectSingleWrapperLast: {
+    padding: 10,
+    backgroundColor: colors.white,
+    marginTop: 20,
+    marginBottom: 40,
+    width: '95%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
 })
