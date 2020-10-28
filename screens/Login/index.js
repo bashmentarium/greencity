@@ -43,8 +43,8 @@ const Login = ({navigation}) => {
           </Text>
           <Formik
             initialValues={{
-              email: '',
-              password: '',
+              email: 'author@gmail.com',
+              password: '126357849',
             }}
             onSubmit={loginHandler}
           >

@@ -1,5 +1,6 @@
 import React from 'react'
 import {View, Text, TouchableOpacity} from 'react-native'
+import {Calendar as Calendarius} from 'react-native-calendars'
 import ProfileButton from '../../components/ProfileButton'
 
 import styles from '../../constants/styles'
@@ -8,6 +9,7 @@ const Calendar = ({navigation}) => {
   return (
     <View style={styles.screenContainer}>
       <Text>Calendar</Text>
+      <Calendarius />
     </View>
   )
 }
