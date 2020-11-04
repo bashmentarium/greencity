@@ -1,24 +1,24 @@
-import {call, put, takeLatest, takeEvery, all} from 'redux-saga/effects'
-import {createAction} from '@reduxjs/toolkit'
-import {login} from '../api/login'
-import NavigationService from '../utils/navigationService'
+import { call, put, takeLatest, takeEvery, all } from 'redux-saga/effects';
+import { createAction } from '@reduxjs/toolkit';
+import * as RootNavigation from '../utils/navigationService';
+import { login } from '../api/login';
 
-export const moduleName = 'login'
-const prefix = `${moduleName}`
+export const moduleName = 'login';
+const prefix = `${moduleName}`;
 
-export const START = `${prefix}/START`
-export const SUCCESS = `${prefix}/SUCCESS`
-export const ERROR = `${prefix}/ERROR`
+export const START = `${prefix}/START`;
+export const SUCCESS = `${prefix}/SUCCESS`;
+export const ERROR = `${prefix}/ERROR`;
 
 export const initialState = {
   loading: false,
   success: false,
   error: null,
-}
+};
 
 export default function reducer(
   state = initialState,
-  {type, payload, ...rest}
+  { type, payload, ...rest }
 ) {
   switch (type) {
     case START:
@@ -26,48 +26,48 @@ export default function reducer(
         loading: true,
         success: false,
         error: null,
-      }
+      };
     case SUCCESS:
       return {
         loading: false,
         success: payload,
         error: null,
-      }
+      };
     case ERROR:
       return {
         loading: false,
         success: false,
         error: payload.error,
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 
-export const loginSelector = (state) => state.login
+export const loginSelector = (state) => state.login;
 
-export const loginStart = createAction(START)
-export const loginSuccess = createAction(SUCCESS)
-export const loginError = createAction(ERROR)
+export const loginStart = createAction(START);
+export const loginSuccess = createAction(SUCCESS);
+export const loginError = createAction(ERROR);
 
-export function* loginSaga({type, payload}) {
+export function* loginSaga({ type, payload }) {
   try {
-    const request = yield call(login, {...payload})
-    const response = yield request.json()
+    const request = yield call(login, { ...payload });
+    const response = yield request.json();
 
     if (!request.ok) {
-      throw error
+      throw error;
     }
 
-    yield put(loginSuccess({user: response.user, token: response.jwt}))
-    yield NavigationService.navigate('Map')
+    yield put(loginSuccess({ user: response.user, token: response.jwt }));
+    yield RootNavigation.navigate('Map');
   } catch (e) {
-    return yield put(loginError({error: error.message}))
+    return yield put(loginError({ error: e.message }));
   }
 }
 
 export const saga = [
   function* saga() {
-    yield all([takeLatest(START, loginSaga)])
+    yield all([takeLatest(START, loginSaga)]);
   },
-]
+];

@@ -1,26 +1,27 @@
-import React from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
-import {Calendar as Calendarius} from 'react-native-calendars'
-import ProfileButton from '../../components/ProfileButton'
+import React from 'react';
+import { View, Text } from 'react-native';
+import { Agenda } from 'react-native-calendars';
+import ProfileButton from '../../components/ProfileButton';
 
-import styles from '../../constants/styles'
+import styles from '../../constants/styles';
+import colors from '../../constants/colors';
 
-const Calendar = ({navigation}) => {
+const Calendar = ({ navigation }) => {
   return (
     <View style={styles.screenContainer}>
       <Text>Calendar</Text>
-      <Calendarius />
+      {/* <Agenda style={{width: '100%'}} /> */}
     </View>
-  )
-}
+  );
+};
 
-Calendar.navigationOptions = ({navigation}) => ({
+export const calendarScreenOptions = ({ navigation }) => ({
   headerTitleStyle: {
     fontFamily: 'light',
     fontSize: 19,
   },
   headerRight: () => <ProfileButton navigation={navigation} />,
   headerBackTitle: null,
-})
+});
 
-export default Calendar
+export default Calendar;

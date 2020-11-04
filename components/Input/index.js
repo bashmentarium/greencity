@@ -29,6 +29,7 @@ const Input = ({
       onChangeText={onChangeText}
       onBlur={onBlur}
       returnKeyType={returnKeyType}
+      placeholder={placeholder}
     />
   )
 }

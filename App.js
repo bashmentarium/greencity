@@ -1,213 +1,180 @@
-import * as React from 'react'
-import {AppLoading} from 'expo'
-import * as Font from 'expo-font'
-import i18n from 'i18n-js'
-import {Provider} from 'react-redux'
-import {Platform} from 'react-native'
-import {createAppContainer, createSwitchNavigator} from 'react-navigation'
-import {createStackNavigator} from 'react-navigation-stack'
-import {createBottomTabNavigator} from 'react-navigation-tabs'
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { Platform } from 'react-native';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+import i18n from 'i18n-js';
+import { Provider } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import store from './store'
+import TabBarIcon from './components/TabBarIcon';
+import Login from './screens/Login';
+import Projects, { projectsScreenOptions } from './screens/Projects';
+import MapScreen, { mapScreenOptions } from './screens/Map';
+import Calendar, { calendarScreenOptions } from './screens/Calendar';
+import Profile, { profileScreenOptions } from './screens/Profile';
+import SingleProject, {
+  singleProjectScreenOptions,
+} from './screens/SingleProject';
 
-import getLocaleMessages from './localization/getLocaleMessages'
+import { navigationRef, isReadyRef } from './utils/navigationService';
+import colors from './constants/colors';
+import store from './store';
+import getLocaleMessages from './localization/getLocaleMessages';
 
-const map = require(`./assets/images/icons/map.png`)
-const map_focused = require(`./assets/images/icons/map_focused.png`)
-const projects = require(`./assets/images/icons/projects.png`)
-const projects_focused = require(`./assets/images/icons/projects_focused.png`)
-const calendar = require(`./assets/images/icons/calendar.png`)
-const calendar_focused = require(`./assets/images/icons/calendar_focused.png`)
+const map = require('./assets/images/icons/map.png');
+const mapFocused = require('./assets/images/icons/map_focused.png');
+const projects = require('./assets/images/icons/projects.png');
+const projectsFocused = require('./assets/images/icons/projects_focused.png');
+const calendar = require('./assets/images/icons/calendar.png');
+const calendarFocused = require('./assets/images/icons/calendar_focused.png');
 
-import NavigationService from './utils/navigationService.js'
-import TabBarIcon from './components/TabBarIcon'
-import Login from './screens/Login'
-import Projects from './screens/Projects'
-import MapScreen from './screens/Map'
-import Calendar from './screens/Calendar'
-import Profile from './screens/Profile'
-import SingleProject from './screens/SingleProject'
-
-import colors from './constants/colors'
+const lightFont = require('./assets/fonts/Assistant-Light.ttf');
+const regularFont = require('./assets/fonts/Assistant-Regular.ttf');
+const mediumFont = require('./assets/fonts/Assistant-SemiBold.ttf');
+const boldFont = require('./assets/fonts/Assistant-Bold.ttf');
 
 i18n.translations = {
   en: getLocaleMessages('en'),
-}
-i18n.locale = 'en'
+};
+i18n.locale = 'en';
 
-export const switchNavigator = createSwitchNavigator({
-  login: createStackNavigator(
-    {
-      Login: Login,
-    },
-    {
-      defaultNavigationOptions: {
-        headerShown: false,
-      },
-    }
-  ),
-  main: createBottomTabNavigator(
-    {
-      Map: createStackNavigator(
-        {
-          Map: {
-            screen: MapScreen,
-            defaultNavigationOptions: {
-              headerTitle: 'Map',
-            },
-          },
-          Profile: {
-            screen: Profile,
-            defaultNavigationOptions: {
-              headerTitle: 'Profile',
-            },
-          },
-          Project: {
-            screen: SingleProject,
-          },
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function MapStack() {
+  return (
+    <Stack.Navigator
+      options={{
+        tabBarIcon: ({ focused }) => options('Map', 'map', focused),
+      }}
+    >
+      <Stack.Screen
+        name="MapScreen"
+        component={MapScreen}
+        options={mapScreenOptions}
+      />
+      <Stack.Screen
+        name="Project"
+        component={SingleProject}
+        options={singleProjectScreenOptions}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={profileScreenOptions}
+      />
+    </Stack.Navigator>
+  );
+}
+function ProjectsStack() {
+  return (
+    <Stack.Navigator
+      options={{
+        tabBarIcon: ({ focused }) => options('Projects', 'projects', focused),
+      }}
+    >
+      <Stack.Screen
+        name="Projects"
+        component={Projects}
+        options={Projects.navigationOptions}
+      />
+      <Stack.Screen
+        name="Project"
+        component={SingleProject}
+        options={SingleProject.navigationOptions}
+      />
+      <Stack.Screen name="Profile" component={Profile} />
+    </Stack.Navigator>
+  );
+}
+function CalendarStack() {
+  return (
+    <Stack.Navigator
+      options={{
+        tabBarIcon: ({ focused }) => options('Calendar', 'calendar', focused),
+      }}
+    >
+      <Stack.Screen name="Calendar" component={Calendar} />
+      <Stack.Screen name="Project" component={SingleProject} />
+      <Stack.Screen name="Profile" component={Profile} />
+    </Stack.Navigator>
+  );
+}
+
+function RootStack() {
+  const getTabs = () => (
+    <Tab.Navigator
+      initialRouteName="Map"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => {
+          let icon;
+
+          if (route.name === 'Map') {
+            icon = focused ? mapFocused : map;
+          } else if (route.name === 'Projects') {
+            icon = focused ? projectsFocused : projects;
+          } else if (route.name === 'Calendar') {
+            icon = focused ? calendarFocused : calendar;
+          }
+          return <TabBarIcon image={icon} />;
         },
-        {
-          initialRouteName: 'Map',
-          defaultNavigationOptions: {
-            headerBackTitle: null,
-            headerTitleStyle: {
-              flex: 1,
-              textAlign: 'center',
-            },
-            headerStyle: {
-              backgroundColor: colors.white,
-              borderBottomColor: colors.background,
-            },
-          },
-          navigationOptions: {
-            tabBarIcon: ({focused}) => (
-              <TabBarIcon name='map' image={focused ? map_focused : map} />
-            ),
-          },
-        }
-      ),
-      Projects: createStackNavigator(
-        {
-          Projects: {
-            screen: Projects,
-            defaultNavigationOptions: {
-              headerTitle: 'Projects',
-            },
-          },
-          Profile: {
-            screen: Profile,
-            defaultNavigationOptions: {
-              headerTitle: 'Profile',
-            },
-          },
-          Project: {
-            screen: SingleProject,
-            defaultNavigationOptions: {
-              headerTitle: 'Project',
-            },
-          },
-        },
-        {
-          initialRouteName: 'Projects',
-          defaultNavigationOptions: {
-            headerTitleStyle: {
-              flex: 1,
-              textAlign: 'center',
-            },
-            headerStyle: {
-              backgroundColor: colors.white,
-              borderBottomColor: 'transparent',
-            },
-          },
-          navigationOptions: {
-            tabBarIcon: ({focused}) => (
-              <TabBarIcon
-                name='projects'
-                image={focused ? projects_focused : projects}
-              />
-            ),
-          },
-        }
-      ),
-      Calendar: createStackNavigator(
-        {
-          Calendar: {
-            screen: Calendar,
-            defaultNavigationOptions: {
-              headerTitle: 'Calendar',
-            },
-          },
-          Profile: {
-            screen: Profile,
-            defaultNavigationOptions: {
-              headerTitle: 'Profile',
-            },
-          },
-          Project: {
-            screen: SingleProject,
-            defaultNavigationOptions: {
-              headerTitle: 'Project',
-            },
-          },
-        },
-        {
-          initialRouteName: 'Calendar',
-          defaultNavigationOptions: {
-            headerTitleStyle: {
-              flex: 1,
-              textAlign: 'center',
-            },
-            headerStyle: {
-              backgroundColor: colors.white,
-              borderBottomColor: 'transparent',
-            },
-          },
-          navigationOptions: {
-            tabBarIcon: ({focused}) => (
-              <TabBarIcon
-                name='calendar'
-                image={focused ? calendar_focused : calendar}
-              />
-            ),
-          },
-        }
-      ),
-    },
-    {
-      initialRouteName: 'Map',
-      tabBarOptions: {
+      })}
+      tabBarOptions={{
         style: {
           backgroundColor: colors.background,
-          height: 70,
+          height: 100,
           paddingTop: 10,
-          borderTopColor: 'transparent',
+          borderTopColor: colors.lightgray,
         },
         labelStyle: {
-          fontFamily: 'light',
-          fontSize: 13,
+          fontFamily: 'regular',
+          fontSize: 15,
           marginBottom: Platform === 'ios' ? 0 : 10,
         },
         activeTintColor: colors.black,
         inactiveTintColor: colors.borderColor,
         keyboardHidesTabBar: true,
-      },
-    }
-  ),
-})
+      }}
+    >
+      <Tab.Screen name="Map" component={MapStack} />
+      <Tab.Screen name="Projects" component={ProjectsStack} />
+      <Tab.Screen name="Calendar" component={CalendarStack} />
+    </Tab.Navigator>
+  );
 
-const App = createAppContainer(switchNavigator)
-
-const fetchFonts = () => {
-  return Font.loadAsync({
-    light: require('./assets/fonts/Assistant-Light.ttf'),
-    regular: require('./assets/fonts/Assistant-Regular.ttf'),
-    medium: require('./assets/fonts/Assistant-SemiBold.ttf'),
-    bold: require('./assets/fonts/Assistant-Bold.ttf'),
-  })
+  return (
+    <>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Map" component={getTabs} />
+      </Stack.Navigator>
+    </>
+  );
 }
 
-export default () => {
-  const [isLoadingComplete, setLoadingComplete] = React.useState(false)
+const fetchFonts = () =>
+  Font.loadAsync({
+    light: lightFont,
+    regular: regularFont,
+    medium: mediumFont,
+    bold: boldFont,
+  });
+
+export default function App() {
+  const [isLoadingComplete, setLoadingComplete] = React.useState(false);
+
+  React.useEffect(() => {
+    return () => {
+      isReadyRef.current = false;
+    };
+  }, []);
 
   if (!isLoadingComplete) {
     return (
@@ -215,15 +182,18 @@ export default () => {
         startAsync={fetchFonts}
         onFinish={() => setLoadingComplete(true)}
       />
-    )
+    );
   }
   return (
     <Provider store={store}>
-      <App
-        ref={(navigatorRef) => {
-          NavigationService.setTopLevelNavigator(navigatorRef)
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={() => {
+          isReadyRef.current = true;
         }}
-      />
+      >
+        {RootStack()}
+      </NavigationContainer>
     </Provider>
-  )
+  );
 }

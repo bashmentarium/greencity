@@ -1,35 +1,35 @@
-import React, {useState, useEffect} from 'react'
-import {View, Text, KeyboardAvoidingView, Platform} from 'react-native'
-import {useDispatch, useSelector} from 'react-redux'
-import {Formik} from 'formik'
-import {loginStart, loginSelector} from '../../ducks/login'
+import React, { useState } from 'react';
+import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Formik } from 'formik';
+import { loginStart, loginSelector } from '../../ducks/login';
 
-import Label from '../../components/Label'
-import Input from '../../components/Input'
-import Button from '../../components/Button'
-import styles from '../../constants/styles'
-import colors from '../../constants/colors'
+import Label from '../../components/Label';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import styles from '../../constants/styles';
+import colors from '../../constants/colors';
 
-const Login = ({navigation}) => {
-  const [authError, setAuthError] = useState('')
-  const {loading, success, error} = useSelector(loginSelector)
+const Login = ({ navigation }) => {
+  const [authError, setAuthError] = useState('');
+  const { loading, success, error } = useSelector(loginSelector);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const loginHandler = (values) => {
-    dispatch(loginStart(values))
-  }
+    dispatch(loginStart(values));
+  };
 
   return (
     <View
-      style={{...styles.screenContainer, backgroundColor: colors.background}}
+      style={{ ...styles.screenContainer, backgroundColor: colors.background }}
     >
       <KeyboardAvoidingView
         style={{
           width: '100%',
           alignItems: 'center',
         }}
-        behavior='padding'
+        behavior="padding"
       >
         <>
           <Text
@@ -48,9 +48,9 @@ const Login = ({navigation}) => {
             }}
             onSubmit={loginHandler}
           >
-            {({values, handleChange, errors, setFieldTouched, isValid}) => (
+            {({ values, handleChange, errors, setFieldTouched, isValid }) => (
               <View style={styles.form}>
-                <Label title='Email address' />
+                <Label title="Email address" />
                 <Input
                   value={values.email}
                   onChangeText={handleChange('email')}
@@ -59,10 +59,10 @@ const Login = ({navigation}) => {
                   secureTextEntry={false}
                   maxLength={30}
                   onBlur={() => setFieldTouched('email')}
-                  returnKeyType='done'
+                  returnKeyType="done"
                   blurOnSubmit
                 />
-                <Label title='Password' />
+                <Label title="Password" />
                 <Input
                   value={values.password}
                   onChangeText={handleChange('password')}
@@ -71,11 +71,11 @@ const Login = ({navigation}) => {
                   secureTextEntry={true}
                   maxLength={30}
                   onBlur={() => setFieldTouched('password')}
-                  returnKeyType='done'
+                  returnKeyType="done"
                   blurOnSubmit
                 />
                 <Button
-                  title='continue'
+                  title="continue"
                   handlePress={isValid ? () => loginHandler(values) : null}
                   buttonStyle={
                     Platform.OS === 'ios' ? styles.buttonIos : styles.button
@@ -88,7 +88,7 @@ const Login = ({navigation}) => {
         </>
       </KeyboardAvoidingView>
     </View>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

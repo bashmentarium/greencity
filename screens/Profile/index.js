@@ -1,13 +1,13 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
-import {View, Text, TouchableOpacity} from 'react-native'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { View, Text, TouchableOpacity } from 'react-native';
 
-import styles from '../../constants/styles'
+import styles from '../../constants/styles';
 
-const Profile = ({navigation}) => {
-  const {username, email, phone, rating, preferred, company} = useSelector(
+const Profile = ({ navigation }) => {
+  const { username, email, phone, rating, preferred, company } = useSelector(
     (state) => state.login.success.user
-  )
+  );
 
   return (
     <View style={styles.screenContainer}>
@@ -20,15 +20,14 @@ const Profile = ({navigation}) => {
       </Text>
       <Text>Company: {company.name}</Text>
     </View>
-  )
-}
+  );
+};
 
-Profile.navigationOptions = ({navigation}) => ({
+export const profileScreenOptions = ({ navigation }) => ({
   headerTitleStyle: {
     fontFamily: 'light',
     fontSize: 19,
   },
-  headerBackTitle: null,
-})
+});
 
-export default Profile
+export default Profile;

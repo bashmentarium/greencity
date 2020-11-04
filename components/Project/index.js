@@ -1,16 +1,16 @@
-import React from 'react'
-import {View, Text} from 'react-native'
-import Button from '../Button'
-import styles from '../../constants/styles'
+import React from 'react';
+import { View, Text } from 'react-native';
+import Button from '../Button';
+import styles from '../../constants/styles';
 
-const Project = ({navigation, project, index, length}) => {
-  const {name, start_date, description, status, address} = project
+const Project = ({ navigation, project, index, length }) => {
+  const { name, startDate, description, status, address } = project;
 
-  const handlePress = (project) => {
+  const handlePress = (item) => {
     navigation.navigate('Project', {
-      project: project,
-    })
-  }
+      project: item,
+    });
+  };
 
   return (
     <View
@@ -31,7 +31,7 @@ const Project = ({navigation, project, index, length}) => {
       </View>
       <View style={styles.modalDate}>
         <Text style={styles.modalNameTextLight}>Start date:</Text>
-        <Text style={styles.modalNameText}>{start_date}</Text>
+        <Text style={styles.modalNameText}>{startDate}</Text>
       </View>
       <View style={styles.modalDescription}>
         <Text style={styles.modalNameTextLight}>Description:</Text>
@@ -42,12 +42,12 @@ const Project = ({navigation, project, index, length}) => {
         <Text style={styles.modalNameText}>{address}</Text>
       </View>
       <Button
-        title='Show more'
+        title="Show more"
         buttonStyle={styles.showMore}
         handlePress={() => handlePress(project)}
       />
     </View>
-  )
-}
+  );
+};
 
-export default Project
+export default Project;

@@ -1,21 +1,21 @@
-import React, {useEffect} from 'react'
-import {View, Text} from 'react-native'
-import {Overlay} from 'react-native-elements'
+import React, { useEffect } from 'react';
+import { View, Text } from 'react-native';
+import { Overlay } from 'react-native-elements';
 
-import styles from '../../constants/styles'
-import Button from '../Button'
+import styles from '../../constants/styles';
+import Button from '../Button';
 
-const Modal = ({project, isVisible, setShowModal, navigation}) => {
-  const {name, start_date, description, status, address} = project
+const Modal = ({ project, isVisible, setShowModal, navigation }) => {
+  const { name, start_date, description, status, address } = project;
 
-  useEffect(() => {}, [])
+  useEffect(() => {}, []);
 
   const handlePress = (project) => {
-    setShowModal(false)
+    setShowModal(false);
     navigation.navigate('Project', {
       project: project,
-    })
-  }
+    });
+  };
 
   return (
     <Overlay
@@ -48,13 +48,13 @@ const Modal = ({project, isVisible, setShowModal, navigation}) => {
           <Text style={styles.modalNameText}>{address}</Text>
         </View>
         <Button
-          title='Show more'
+          title="Show more"
           buttonStyle={styles.showMore}
           handlePress={() => handlePress(project)}
         />
       </View>
     </Overlay>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

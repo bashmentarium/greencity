@@ -1,14 +1,14 @@
-import React from 'react'
-import {ScrollView, View, Text, Image} from 'react-native'
-import ProfileButton from '../../components/ProfileButton'
+import React from 'react';
+import { ScrollView, View, Text, Image } from 'react-native';
+import ProfileButton from '../../components/ProfileButton';
 
-import styles from '../../constants/styles'
+import styles from '../../constants/styles';
 
-const map_preview = require('../../assets/images/map_preview.png')
+const map_preview = require('../../assets/images/map_preview.png');
 
-const SingleProject = ({navigation}) => {
-  const project = navigation.getParam('project')
-  const {name, status, address, start_date, description} = project
+const SingleProject = ({ route, navigation }) => {
+  const { project } = route.params;
+  const { name, status, address, start_date, description } = project;
 
   return (
     <ScrollView style={styles.singleProjectWrapper}>
@@ -43,16 +43,16 @@ const SingleProject = ({navigation}) => {
         <Text>{description}</Text>
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
-SingleProject.navigationOptions = ({navigation}) => ({
+export const singleProjectScreenOptions = ({ navigation }) => ({
   headerTitle: 'Project details',
   headerTitleStyle: {
     fontFamily: 'light',
     fontSize: 19,
   },
   headerRight: () => <ProfileButton navigation={navigation} />,
-})
+});
 
-export default SingleProject
+export default SingleProject;
