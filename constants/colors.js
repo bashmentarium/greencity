@@ -6,6 +6,6 @@ export default {
   lightgray: 'lightgray',
   constrast: '#333333',
   primary: '#fc9208',
-  green: '#70e500',
-  red: '#FF0000',
-}
+  green: '#48BF84',
+  red: '#FE5F55',
+};

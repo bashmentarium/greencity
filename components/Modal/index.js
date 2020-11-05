@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { Overlay } from 'react-native-elements';
 
@@ -7,8 +7,11 @@ import Button from '../Button';
 
 const Modal = ({ project, isVisible, setShowModal, navigation }) => {
   const { name, start_date, description, status, address } = project;
+  const [nav, setNav] = useState(null);
 
-  useEffect(() => {}, []);
+  const handleBackDrop = () => {
+    setShowModal(false);
+  };
 
   const handlePress = (project) => {
     setShowModal(false);
@@ -20,7 +23,7 @@ const Modal = ({ project, isVisible, setShowModal, navigation }) => {
   return (
     <Overlay
       isVisible={isVisible}
-      onBackdropPress={() => setShowModal(false)}
+      onBackdropPress={handleBackDrop}
       overlayStyle={styles.projectOverlay}
     >
       <View>

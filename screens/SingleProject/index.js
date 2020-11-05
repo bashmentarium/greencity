@@ -1,14 +1,32 @@
 import React from 'react';
 import { ScrollView, View, Text, Image } from 'react-native';
 import ProfileButton from '../../components/ProfileButton';
+import Back from '../../components/Back';
 
 import styles from '../../constants/styles';
+import colors from '../../constants/colors';
 
 const map_preview = require('../../assets/images/map_preview.png');
 
 const SingleProject = ({ route, navigation }) => {
   const { project } = route.params;
   const { name, status, address, start_date, description } = project;
+
+  navigation.setOptions({
+    headerTitle: name,
+    headerTitleStyle: {
+      fontFamily: 'light',
+      fontSize: 19,
+      color: colors.black,
+    },
+    headerBackTitleStyle: {
+      fontSize: 15,
+      color: colors.black,
+      fontFamily: 'regular',
+    },
+    headerLeft: () => <Back navigation={navigation} />,
+    headerRight: () => <ProfileButton navigation={navigation} />,
+  });
 
   return (
     <ScrollView style={styles.singleProjectWrapper}>

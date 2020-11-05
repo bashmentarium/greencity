@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native';
 
-import colors from './colors'
+import colors from './colors';
 
 export default StyleSheet.create({
   screenContainer: {
@@ -214,4 +214,17 @@ export default StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
-})
+  backButton: {
+    marginLeft: 10,
+    width: 50,
+  },
+  pinTitleWrapper: {
+    backgroundColor: colors.white,
+    padding: 5,
+    borderRadius: 3,
+    marginBottom: 3,
+  },
+  markerWrapper: {
+    alignItems: 'center',
+  },
+});

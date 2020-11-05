@@ -7,6 +7,16 @@ import styles from '../../constants/styles';
 import colors from '../../constants/colors';
 
 const Calendar = ({ navigation }) => {
+  navigation.setOptions({
+    headerTitle: 'Calendar',
+    headerTitleStyle: {
+      fontFamily: 'light',
+      fontSize: 19,
+      color: colors.black,
+    },
+    headerRight: () => <ProfileButton navigation={navigation} />,
+  });
+
   return (
     <View style={styles.screenContainer}>
       <Text>Calendar</Text>
@@ -14,14 +24,5 @@ const Calendar = ({ navigation }) => {
     </View>
   );
 };
-
-export const calendarScreenOptions = ({ navigation }) => ({
-  headerTitleStyle: {
-    fontFamily: 'light',
-    fontSize: 19,
-  },
-  headerRight: () => <ProfileButton navigation={navigation} />,
-  headerBackTitle: null,
-});
 
 export default Calendar;

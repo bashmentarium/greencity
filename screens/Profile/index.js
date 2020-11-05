@@ -1,13 +1,25 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { View, Text, TouchableOpacity } from 'react-native';
-
+import { View, Text } from 'react-native';
+import Back from '../../components/Back';
 import styles from '../../constants/styles';
+import colors from '../../constants/colors';
 
-const Profile = ({ navigation }) => {
+const Profile = ({ route, navigation }) => {
   const { username, email, phone, rating, preferred, company } = useSelector(
     (state) => state.login.success.user
   );
+
+  navigation.setOptions({
+    headerTitle: 'Profile',
+    headerTitleStyle: {
+      fontFamily: 'light',
+      fontSize: 19,
+      color: colors.black,
+    },
+    headerRight: () => null,
+    headerLeft: () => <Back navigation={navigation} />,
+  });
 
   return (
     <View style={styles.screenContainer}>
@@ -22,12 +34,5 @@ const Profile = ({ navigation }) => {
     </View>
   );
 };
-
-export const profileScreenOptions = ({ navigation }) => ({
-  headerTitleStyle: {
-    fontFamily: 'light',
-    fontSize: 19,
-  },
-});
 
 export default Profile;
