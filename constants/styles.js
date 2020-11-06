@@ -223,6 +223,8 @@ export default StyleSheet.create({
     padding: 5,
     borderRadius: 3,
     marginBottom: 3,
+    borderWidth: 1,
+    borderColor: colors.lightgray,
   },
   markerWrapper: {
     alignItems: 'center',

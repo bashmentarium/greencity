@@ -71,7 +71,7 @@ export function AppStack() {
       tabBarOptions={{
         style: {
           backgroundColor: colors.background,
-          height: 100,
+          height: Platform === 'ios' ? 100 : 75,
           paddingTop: 10,
           borderTopColor: colors.lightgray,
         },

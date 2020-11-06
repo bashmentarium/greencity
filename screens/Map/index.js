@@ -48,7 +48,7 @@ const MapScreen = ({ navigation }) => {
     dispatch(fetchProjectsStart(token));
   }, []);
 
-  useEffect(() => {}, [showModal]);
+  useEffect(() => {}, []);
 
   const handleClick = (project) => {
     setProject(project);

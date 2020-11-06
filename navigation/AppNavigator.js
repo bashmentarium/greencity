@@ -6,7 +6,7 @@ import { AuthStack } from './AuthStack';
 import { AppStack } from './AppStack';
 // import StartupScreen from '../screens/StartupScreen';
 
-const AppNavigator = (props) => {
+const AppNavigator = () => {
   const isAuth = useSelector((state) => !!state.login.success);
 
   useEffect(() => {

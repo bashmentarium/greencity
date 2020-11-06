@@ -4,11 +4,8 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import i18n from 'i18n-js';
 import { Provider } from 'react-redux';
-import { NavigationContainer } from '@react-navigation/native';
 
 import AppNavigator from './navigation/AppNavigator';
-
-import { navigationRef, isReadyRef } from './utils/navigationService';
 
 import store from './store';
 import getLocaleMessages from './localization/getLocaleMessages';
